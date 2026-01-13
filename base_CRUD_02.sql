@@ -46,7 +46,8 @@ order by employee_id;
 select
 concat_ws(' ', first_name, middle_name, last_name) as 'Full Name'
 from employees
-where salary = 25000 or salary = 14000 or salary = 12500 or salary = 23600;
+where salary in (25000, 14000, 12500, 23600);
+-- where salary = 25000 or salary = 14000 or salary = 12500 or salary = 23600;
 
 -- 10 Find All Employees Without Manager
 
@@ -110,7 +111,8 @@ limit 7;
 
 update employees
 set salary = salary + salary * 0.12
-where department_id = 1 or department_id = 2 or department_id = 4 or department_id = 11;
+where department_id in (1, 2, 4, 11);
+-- where department_id = 1 or department_id = 2 or department_id = 4 or department_id = 11;
 
 select salary from employees;
 
@@ -127,6 +129,14 @@ order by population desc, country_name
 limit 30;
 
 -- 23 Countries and Currency (Euro / Not Euro)
+
+select country_name, country_code,
+case
+	when currency_code = 'EUR' then 'Euro'
+    else 'Not Euro'
+end as currency
+from countries
+order by country_name;
 
 -- 24 All Diablo Characters 
 
