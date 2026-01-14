@@ -1,4 +1,4 @@
--- set Database 'geography'
+-- set DB geography
 
 CREATE DATABASE IF NOT EXISTS `geography`;
 USE `geography`;
