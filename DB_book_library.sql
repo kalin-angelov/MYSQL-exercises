@@ -1,4 +1,4 @@
--- set database
+-- set DB book library
 
 CREATE DATABASE book_library;
 USE book_library;
