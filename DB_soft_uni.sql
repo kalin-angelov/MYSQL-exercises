@@ -1,4 +1,4 @@
--- set Database 'soft_uni'
+-- set DB soft_uni
 
 
 CREATE DATABASE IF NOT EXISTS `soft_uni`;
