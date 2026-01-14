@@ -1,4 +1,4 @@
--- set Database 'diablo'
+-- set DB diablo
 
 CREATE DATABASE IF NOT EXISTS `diablo`;
 USE `diablo`;
