@@ -70,7 +70,18 @@ where char_length(last_name) = 5;
 
 -- 10 Countries Holding 'A' 3 or More Times
 
+select country_name, iso_code
+from countries
+where country_name like '%a%a%a%'
+order by iso_code;
+
 -- 11 Mix of Peak and River Names
+
+select peak_name, river_name,
+lower(concat(peak_name, substring(river_name, 2))) as mix
+from peaks, rivers
+where lower(right(peak_name, 1)) = lower(left(river_name, 1))
+order by mix;
 
 -- 12 Games from 2011 and 2012 Year
 
@@ -82,6 +93,11 @@ order by start, name
 limit 50;
 
 -- 13 User Email Providers
+
+select user_name,
+substring_index(email, '@', -1) as `email provider`
+from users
+order by `email provider`, user_name;
 
 -- 14 Get Users with IP Address Like Pattern
 
