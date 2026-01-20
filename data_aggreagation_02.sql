@@ -129,10 +129,12 @@ where manager_id is null;
 
 -- 16 3rd Highest Salary
 
-select department_id, 
-max(salary) as third_highest_salary
-from employees
-group by department_id
+select distinct(department_id), salary
+from
+(select department_id, salary,
+	dense_rank() over(partition by department_id order by salary desc) as ranked
+from employees) as third_highest_salary
+where ranked = 3
 order by department_id;
 
 
