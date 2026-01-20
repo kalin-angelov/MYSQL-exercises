@@ -117,6 +117,19 @@ from employees
 group by department_id
 order by department_id;
 
+
+-- 17 Salary Challenge
+
+select first_name, last_name, department_id
+from employees e
+where e.salary > (
+	select avg(e2.salary)
+    from employees e2
+    where e2.department_id = e.department_id
+)
+order by e.department_id, employee_id
+limit 10;
+
 -- 18 Departments Total Salaries
 
 select department_id, sum(salary) as total_salary
