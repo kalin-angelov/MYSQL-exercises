@@ -207,3 +207,10 @@ create table agenda (
 );
 
 -- 9 Peaks in Rila
+
+select mountain_range, peak_name, elevation as peak_elevation
+from peaks as p
+join mountains as m
+on m.id = p.mountain_id
+where mountain_range = 'Rila'
+order by peak_elevation desc;
