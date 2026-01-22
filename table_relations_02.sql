@@ -101,3 +101,109 @@ values
 (3, 103),
 (2, 102),
 (2, 103);
+
+-- 4 Self-Referencing
+
+create table teachers (
+	teacher_id  int auto_increment primary key,
+    name varchar(100),
+    manager_id int,
+    foreign key (manager_id) references teachers(teacher_id)
+);
+
+insert into teachers
+values (101, 'John', null);
+
+insert into teachers 
+values (105, 'Mark', 101), (106, 'Greta',101);
+
+insert into teachers
+values (104, 'Ted', 105);
+
+insert into teachers 
+values (102, 'Maya', 106), (103, 'Silvia',106);
+
+-- 5 Online Store Database
+
+create database demo;
+use demo;
+
+create table item_types (
+	item_type_id int auto_increment primary key,
+    name varchar(50)
+);
+
+create table items (
+	item_id int auto_increment primary key,
+    name varchar(50),
+    item_type_id int,
+    foreign key (item_type_id) references item_types(item_type_id)
+);
+
+create table cities (
+	city_id int auto_increment primary key,
+    name varchar(50)
+);
+
+create table customers (
+	customer_id int auto_increment primary key,
+    name varchar(50),
+    birthday date,
+    city_id int,
+    foreign key (city_id) references cities(city_id)
+);
+
+create table orders (
+	order_id int auto_increment primary key,
+    customer_id int,
+    foreign key (customer_id) references customers(customer_id)
+);
+
+create table order_items (
+	order_id int,
+    item_id int,
+    primary key (order_id, item_id),
+    foreign key (order_id) references orders(order_id),
+    foreign key (item_id) references items(item_id)
+);
+
+-- 6 University Database
+
+create database university;
+use university;
+
+create table subjects (
+	subject_id int auto_increment primary key,
+    subject_name varchar(50)
+);
+
+create table majors (
+	major_id int primary key auto_increment,
+    name varchar(50)
+);
+
+create table students (
+	student_id int primary key auto_increment,
+    student_number varchar(12),
+    student_name varchar(50),
+    major_id int,
+    foreign key (major_id) references majors(major_id)
+);
+
+create table payments (
+	payment_id int primary key auto_increment,
+    payment_date date,
+    payment_amount decimal(8, 2),
+    student_id int,
+    foreign key (student_id) references students(student_id)
+);
+
+create table agenda (
+	student_id int,
+    subject_id int,
+    primary key (student_id, subject_id),
+    foreign key (student_id) references students(student_id),
+    foreign key (subject_id) references subjects(subject_id)
+);
+
+-- 9 Peaks in Rila
