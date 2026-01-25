@@ -1,15 +1,17 @@
 -- 1 One-To-One Relationship
 
-create table people (
-	person_id int,
-    first_name varchar(50),
-    salary decimal(7,2),
-    passport_id int
-);
-
 create table passports (
 	passport_id int auto_increment primary key,
     passport_number varchar(100) not null unique
+);
+
+
+create table people (
+	person_id int auto_increment primary key,
+    first_name varchar(50) not null,
+    salary decimal(7,2),
+    passport_id int not null unique,
+    constraint foreign key (passport_id) references passports(passport_id)
 );
 
 insert into passports
@@ -23,14 +25,6 @@ values
 (1, 'Roberto', 43300.00, 102),
 (2, 'Tom', 56100.00, 103),
 (3, 'Yana', 60200.00, 101);
-
-alter table people
-add constraint
-primary key(person_id);
-
-alter table people
-add constraint
-foreign key (passport_id) references passports(passport_id);
 
 -- 2 One-To-Many Relationship
 
