@@ -132,3 +132,94 @@ from employees
 group by department_id
 order by min_average_salary
 limit 1;
+
+-- 12 Highest Peaks in Bulgaria
+
+select c.country_code, m.mountain_range, p.peak_name, p.elevation
+from countries as c
+join mountains_countries as mc
+on c.country_code = mc.country_code
+join mountains as m
+on mc.mountain_id = m.id
+join peaks as p
+on p.mountain_id = m.id
+where c.country_code = 'BG'
+and p.elevation > 2835
+order by p.elevation desc;
+
+-- 13 Count Mountain Ranges
+
+select c.country_code,
+count(m.mountain_range) as mountain_range
+from countries as c
+join mountains_countries as mc
+on c.country_code = mc.country_code
+join mountains as m
+on mc.mountain_id = m.id
+where c.country_code in ('BG', 'RU', 'US')
+group by c.country_code
+order by mountain_range desc;
+
+-- 14 Countries with Rivers
+
+select c.country_name, r.river_name
+from countries as c
+join continents as ct
+on c.continent_code = ct.continent_code
+left join countries_rivers as cr
+on c.country_code = cr.country_code
+left join rivers as r
+on cr.river_id = r.id
+where ct.continent_name = 'Africa'
+order by c.country_name
+limit 5;
+
+-- 15 Continents and Currencies
+
+select
+continent_code,
+currency_code,
+currency_usage
+from(
+	select continent_code,
+	currency_code,
+	count(*) as currency_usage,
+	dense_rank() over (
+		partition by continent_code
+		order by count(*) desc
+	) as rnk
+	from countries
+	where currency_code is not null
+	group by continent_code, currency_code
+	having count(*) > 1
+) as t
+where rnk = 1
+order by continent_code, currency_code;
+
+-- 16 Countries Without Any Mountains
+
+select count(*) as country_count
+from countries as c
+left join mountains_countries as mc
+on c.country_code = mc.country_code
+where mc.country_code is null; 
+
+-- 17 Highest Peak and Longest River by Country
+
+select c.country_name,
+max(p.elevation) as highest_peak_elevation,
+max(r.length) as longest_river_length
+from countries as c
+left join mountains_countries as mc
+on c.country_code = mc.country_code
+left join peaks as p
+on mc.mountain_id = p.mountain_id
+left join countries_rivers as cr
+on c.country_code = cr.country_code
+left join rivers as r
+on cr.river_id = r.id
+group by c.country_name
+order by highest_peak_elevation desc, 
+longest_river_length desc,
+c.country_name
+limit 5;
