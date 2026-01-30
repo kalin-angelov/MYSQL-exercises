@@ -184,7 +184,7 @@ delimiter //
 create procedure usp_calculate_future_value_for_account(id int, interest_rate decimal(5,4))
 begin
 	select 
-    a.id as acount_id,
+    a.id as account_id,
     ah.first_name,
     ah.last_name,
     a.balance as current_balance,
