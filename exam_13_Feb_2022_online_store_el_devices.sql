@@ -58,7 +58,6 @@ create table orders_products (
     foreign key (product_id) references products(id)
 );
 
-
 -- 2 Insert 
 
 insert into reviews (content, picture_url, published_at, rating)
